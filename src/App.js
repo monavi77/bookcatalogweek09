@@ -8,30 +8,56 @@ function App() {
   const [formData, setFormData] = useState({
     title: "",
     author: "",
-    publisher: "",
-    year: "",
-    language: "",
-    pages: "",
+    url: "",
   });
 
   useEffect(() => {
     fetch("/data/books.json")
       .then((res) => res.json())
-      .then((json) => setBooks(json));
+      .then((json) =>
+        setBooks(
+          json.map((b) => ({
+            ...b,
+            selected: false,
+          }))
+        )
+      );
   }, []);
 
-  const removeBook = (id) => {
-    setBooks(books.filter((b) => b.isbn13 !== id));
+  // Handle clicking on a book → only one selected at a time
+  const handleSelect = (id) => {
+    setBooks((prevBooks) =>
+      prevBooks.map((b) => ({
+        ...b,
+        selected: b.isbn13 === id ? !b.selected : false,
+      }))
+    );
+  };
+
+  const handleDelete = () => {
+    setBooks((prevBooks) => prevBooks.filter((b) => !b.selected));
+  };
+
+  const handleAdd = (e) => {
+    e.preventDefault();
+
+    const newBook = {
+      isbn13: Date.now().toString(),
+      title: formData.title,
+      author: formData.author,
+      url: formData.url,
+      image: formData.url || "https://via.placeholder.com/150x200",
+      selected: false,
+    };
+
+    setBooks((prev) => [...prev, newBook]);
+    setFormData({ title: "", author: "", url: "" });
+    setShowModal(false);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setShowModal(false);
   };
 
   return (
@@ -46,6 +72,15 @@ function App() {
           <button className="add-btn" onClick={() => setShowModal(true)}>
             + Add
           </button>
+          <button
+            className="update-btn"
+            onClick={() => alert("Update feature coming soon!")}
+          >
+            Update
+          </button>
+          <button className="delete-btn" onClick={handleDelete}>
+            Delete
+          </button>
         </div>
 
         <div className="grid">
@@ -57,7 +92,8 @@ function App() {
               price={book.price}
               image={book.image}
               url={book.url}
-              onRemove={removeBook}
+              selected={book.selected}
+              onSelect={handleSelect}
             />
           ))}
         </div>
@@ -67,12 +103,11 @@ function App() {
         <p>© 2025 Elf Book Catalog. All rights reserved.</p>
       </footer>
 
-      {/* Modal */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
             <h2>Add a New Book</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleAdd}>
               <label>
                 Title:
                 <input
@@ -94,38 +129,11 @@ function App() {
                 />
               </label>
               <label>
-                Publisher:
+                Cover URL:
                 <input
                   type="text"
-                  name="publisher"
-                  value={formData.publisher}
-                  onChange={handleChange}
-                />
-              </label>
-              <label>
-                Year:
-                <input
-                  type="number"
-                  name="year"
-                  value={formData.year}
-                  onChange={handleChange}
-                />
-              </label>
-              <label>
-                Language:
-                <input
-                  type="text"
-                  name="language"
-                  value={formData.language}
-                  onChange={handleChange}
-                />
-              </label>
-              <label>
-                Pages:
-                <input
-                  type="number"
-                  name="pages"
-                  value={formData.pages}
+                  name="url"
+                  value={formData.url}
                   onChange={handleChange}
                 />
               </label>

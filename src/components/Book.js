@@ -1,33 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Book.css";
 
-export default function Book({ id, title, price, image, url, onRemove }) {
-  const [selected, setSelected] = useState(false);
-
-  const toggleSelect = () => {
-    setSelected(!selected);
-  };
-
+export default function Book({
+  id,
+  title,
+  price,
+  image,
+  url,
+  selected,
+  onSelect,
+}) {
   return (
     <div
       className={`book-card ${selected ? "selected" : ""}`}
-      onClick={toggleSelect}
+      onClick={() => onSelect(id)}
     >
       <img src={image} alt="Book cover" className="book-image" />
       <p className="title">{title}</p>
-      <p className="price">{price}</p>
+      {price && <p className="price">{price}</p>}
       <a href={url} target="_blank" rel="noopener noreferrer">
         View More
       </a>
-      <button
-        className="remove-btn"
-        onClick={(e) => {
-          e.stopPropagation();
-          onRemove(id);
-        }}
-      >
-        Remove
-      </button>
     </div>
   );
 }

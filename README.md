@@ -1,25 +1,23 @@
-# Book Catalog App
+# Book Catalog App BookLab6
 
-A simple React app that displays books with their covers, authors, and links to details. Supports multiple authors on separate lines and includes a sticky footer and an Add button.
+A React app that displays a list of books with their covers, authors, and links to details.  
+Users can add new books, select one book at a time, and delete the selected book.  
+Includes a responsive grid layout, sticky footer, and a modal form for adding books.
+
+---
 
 ## Features
 
 - Header with logo and app title
-- Reusable Book component to display book cover, title, and price
-- View book details in a new browser tab
-- Add button in its own column for adding new books
-- Responsive grid layout for books
+- Reusable Book component to display each book’s cover, title, and price
+- "View More" link opens the book's page in a new browser tab
+- Add button opens a modal dialog for entering new book details
+- Update button (currently a no-op placeholder)
+- Delete button removes the currently selected book
+- Clicking a book highlights it (only one can be selected at a time)
+- Responsive grid layout for displaying books
 - Sticky footer at the bottom of the page
-- Add button opens a modal dialog for book details
-- Remove button removes individual book cards from the page
-- Clicking a book highlights it to indicate selection; clicking again restores the original style
-- Form in the modal includes:
-  Title
-  Author
-  Publisher
-  Year
-  Language
-  Pages
-- Form submission closes the modal
-
-# bookweek4
+- Modal form includes:
+  - Title
+  - Author
+  - Cover URL

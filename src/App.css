@@ -128,3 +128,28 @@ textarea {
   box-sizing: border-box;
   margin-top: 6px;
 }
+
+.update-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+.update-btn:hover {
+  background-color: #388e3c;
+}
