@@ -149,7 +149,7 @@ function App() {
             <select
               value={priceFilter}
               onChange={(e) => setPriceFilter(e.target.value)}
-              style={{ marginLeft: 8 }}
+    
             >
               <option value="all">All</option>
               <option value="lt10">Under $10</option>
